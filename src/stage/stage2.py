@@ -10,6 +10,7 @@ N_SYSTEMS = 3
 
 
 def fill_row_by_pair(selected_df_overall: pd.DataFrame, n, indx, idx, indices) -> list:
+    """Map result to columns"""
     row = [[], [], []]
 
     first_indx = selected_df_overall['source'][indx:indx + n - 1].iloc[indices[0][0]]
@@ -44,9 +45,6 @@ def stage2_run(selected_df_overall: pd.DataFrame):
                 if dist < THRESHOLD and dist != 0 and idx != indices[0][0]:
                     result.loc[uuid.uuid4()] = fill_row_by_pair(selected_df_overall, N, indx, idx, indices)
 
-    print('Done')
-
-    print(result.shape)
-
     print(result.sample(5))
+
     return result
