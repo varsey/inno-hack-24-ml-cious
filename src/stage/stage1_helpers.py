@@ -1,15 +1,9 @@
 import re
 import string
-import nltk
-
-
-nltk.download('stopwords')
-stop_words = set(nltk.corpus.stopwords.words('russian'))
 
 LEN_THRESHOLD = 3
 
 flt_chars = []
-
 def remove_punctuation(input_string):
     combined_punctuation = string.punctuation + ''.join(flt_chars)
     translator = str.maketrans(combined_punctuation, ' ' * len(combined_punctuation))

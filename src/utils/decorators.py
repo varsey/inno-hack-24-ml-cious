@@ -3,7 +3,7 @@ import asyncio
 import functools
 from contextlib import contextmanager
 
-from src.logger import DicLogger, LOGGING_CONFIG
+from src.utils.logger import DicLogger, LOGGING_CONFIG
 
 log = DicLogger(LOGGING_CONFIG).log
 
