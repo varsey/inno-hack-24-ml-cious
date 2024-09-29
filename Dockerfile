@@ -5,4 +5,4 @@ RUN pip install --upgrade pip && pip install --no-cache-dir --prefer-binary -r r
 COPY src ./src
 COPY main.py .
 RUN mkdir log
-ENTRYPOINT ["python3", "main.py"]
+CMD ["python3", "main.py"]
