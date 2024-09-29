@@ -5,11 +5,15 @@ from src.utils.logger import DicLogger, LOGGING_CONFIG
 
 log = DicLogger(LOGGING_CONFIG).log
 
-def run_ch_task():
-    client = Client(host='clickhouse')
+def get_data_from_ch() -> tuple:
+    client = Client(host='localhost')
     log.info(f'{client.execute("SHOW DATABASES")}')
-    data = client.execute('SELECT * FROM table_dataset1')
-    log.info(f'{data}')
-    log.info('***')
-    if data:
-        log.info(f'{pd.DataFrame(data[1:], columns=data[0]).head(10)}')
+    df1 = client.execute('SELECT * FROM table_dataset1')
+    df1_clms = client.execute('SELECT * FROM table_dataset1', with_column_types=True)
+
+    df2 = client.execute('SELECT * FROM table_dataset2')
+    df2_clms = client.execute('SELECT * FROM table_dataset2', with_column_types=True)
+
+    df3 = client.execute('SELECT * FROM table_dataset3')
+    df3_clms = client.execute('SELECT * FROM table_dataset3', with_column_types=True)
+    return (df1, df1_clms), (df2, df2_clms), (df3, df3_clms)

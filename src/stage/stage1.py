@@ -8,14 +8,20 @@ TOTALWORDS_LIMIT = 6
 
 
 @duration
-def stage1_run():
-    df_1 = pd.read_csv(f'{os.getcwd()}/data/df1_sample.csv')
-    df_2 = pd.read_csv(f'{os.getcwd()}/data/df2_sample.csv')
-    df_3 = pd.read_csv(f'{os.getcwd()}/data/df3_sample.csv')
+def stage1_run(data: tuple):
+    df_1_raw, df_2_raw, df_3_raw = data
+
+    df_1 = pd.DataFrame(df_1_raw[0])
+    df_1.columns = [x[0] for x in df_1_raw[1][-1]]
+
+    df_2 = pd.DataFrame(df_2_raw[0])
+    df_2.columns = [x[0] for x in df_2_raw[1][-1]]
+
+    df_3 = pd.DataFrame(df_3_raw[0])
+    df_3.columns = [x[0] for x in df_3_raw[1][-1]]
 
     df_1 = df_1.drop(['sex', 'email'], axis=1)
     df_3 = df_3.drop(['sex', 'email'], axis=1)
-
 
     df_2['full_name'] = df_2['last_name'] + ' ' + df_2['first_name'] + ' ' + df_2['middle_name']
 
