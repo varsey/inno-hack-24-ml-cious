@@ -1,4 +1,3 @@
-import os
 import pandas as pd
 
 from src.utils.decorators import duration
@@ -38,13 +37,9 @@ def stage1_run(data: tuple):
     df_2['source'] = 2
     df_3['source'] = 3
 
-
     target_cols = ['uid', 'birthdate', 'phone', 'address', 'full_name', 'source']
 
     df_overall = pd.concat([df_1[target_cols], df_2[target_cols], df_3[target_cols]], axis='rows')
-    print(
-        df_overall.sample()
-    )
 
     df_overall['full_name'] = df_overall['full_name'].astype('str')
     df_overall['full_name'] = df_overall['full_name'].apply(
@@ -55,7 +50,6 @@ def stage1_run(data: tuple):
     )
     mask = (df_overall['full_name'].str.len() > 0)
     df_overall = df_overall.loc[mask]
-    print('filer but str length')
     print(
         df_overall.shape
     )
@@ -69,18 +63,11 @@ def stage1_run(data: tuple):
                                                                                           'улица', 'булица', 'село',
                                                                                           'город', 'поселок', 'деревня']))
 
-    print()
-    print(
-        df_overall.sample()
-    )
-    print()
-
     df_overall['sign'] = df_overall['full_name'] + ' ' + df_overall['phone'] + ' ' + df_overall['birthdate'] + ' ' + \
                          df_overall['address']
 
 
     df_overall['totalwords'] = df_overall['sign'].str.split(' ').str.len()
-
 
     df_overall = df_overall[df_overall.totalwords > TOTALWORDS_LIMIT]
     print(
@@ -100,4 +87,3 @@ def stage1_run(data: tuple):
         selected_df_overall[['sign']].head(20)
     )
     return selected_df_overall
-

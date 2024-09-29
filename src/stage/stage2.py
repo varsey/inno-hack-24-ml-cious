@@ -49,3 +49,4 @@ def stage2_run(selected_df_overall: pd.DataFrame):
     print(result.shape)
 
     print(result.sample(5))
+    return result

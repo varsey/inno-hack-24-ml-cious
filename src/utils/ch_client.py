@@ -1,21 +1,37 @@
-import pandas as pd
 from clickhouse_driver import Client
 
+from src.utils.decorators import duration
 from src.utils.logger import DicLogger, LOGGING_CONFIG
 
 log = DicLogger(LOGGING_CONFIG).log
 
-def get_data_from_ch() -> tuple:
-    client = Client(host='localhost')
-    log.info(f'{client.execute("SHOW DATABASES")}')
+class ChClient():
+    def __init__(self):
+        self.client = Client(host='localhost')
 
-    # TO-DO figure out how to get column names from ch
-    df1 = client.execute('SELECT * FROM table_dataset1')
-    df1_clms = client.execute('SELECT * FROM table_dataset1', with_column_types=True)
+    @duration
+    def get_data_from_ch(self) -> tuple:
 
-    df2 = client.execute('SELECT * FROM table_dataset2')
-    df2_clms = client.execute('SELECT * FROM table_dataset2', with_column_types=True)
+        log.info(f'{self.client.execute("SHOW DATABASES")}')
 
-    df3 = client.execute('SELECT * FROM table_dataset3')
-    df3_clms = client.execute('SELECT * FROM table_dataset3', with_column_types=True)
-    return (df1, df1_clms), (df2, df2_clms), (df3, df3_clms)
+        # TO-DO figure out how to get column names from ch
+        df1 = self.client.execute('SELECT * FROM table_dataset1')
+        df1_clms = self.client.execute('SELECT * FROM table_dataset1 LIMIT 1', with_column_types=True)
+
+        df2 = self.client.execute('SELECT * FROM table_dataset2')
+        df2_clms = self.client.execute('SELECT * FROM table_dataset2 LIMIT 1', with_column_types=True)
+
+        df3 = self.client.execute('SELECT * FROM table_dataset3')
+        df3_clms = self.client.execute('SELECT * FROM table_dataset3 LIMIT 1', with_column_types=True)
+
+        return (df1, df1_clms), (df2, df2_clms), (df3, df3_clms)
+
+    @duration
+    def send_data_to_ch(self, res) -> None:
+
+        data_to_insert = []
+        for index, row in res.iterrows():
+            data_to_insert.append((row[1], row[2], row[3]))
+
+        self.client.execute('INSERT INTO table_results (id_is1, id_is2, id_is3) VALUES', data_to_insert)
+
