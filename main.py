@@ -11,6 +11,7 @@ if __name__ == '__main__':
     data_collection = ch_client.get_data_from_ch()
     processed_data = stage1.stage1_run(data_collection)
     pairs = stage2.stage2_run(processed_data)
+    log.info(f'{pairs.shape}')
 
     ch_client.send_data_to_ch(pairs)
     ch_client.client.disconnect()

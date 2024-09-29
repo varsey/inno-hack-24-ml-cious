@@ -4,6 +4,9 @@ import pandas as pd
 
 from src.utils.decorators import duration
 from src.stage.stage2_helpers import get_tfidf_artifacts, find_similar_pairs, create_index_ivf, create_index_hnsw
+from src.utils.logger import DicLogger, LOGGING_CONFIG
+
+log = DicLogger(LOGGING_CONFIG).log
 
 THRESHOLD = 0.6
 N_SYSTEMS = 3
@@ -33,7 +36,7 @@ def stage2_run(selected_df_overall: pd.DataFrame):
     N = 100
     for indx in range(0, len(selected_df_overall), N):
         if indx / N % 1000 == 0:
-            print(f'working with batch {indx / N} out of {len(selected_df_overall) / N}')
+            log.info(f'working with batch {indx / N} out of {len(selected_df_overall) / N}')
         documents = selected_df_overall['sign'][indx:indx + N - 1].to_list()
         tfidf_matrix, dimension = get_tfidf_artifacts(documents)
 

@@ -61,9 +61,9 @@ engine = MergeTree()
 order by id_is1;
 EOSQL
 
-clickhouse-client --query="INSERT INTO table_dataset1 FORMAT CSV" < /csv_files/df1_sample.csv
+clickhouse-client --query="INSERT INTO table_dataset1 FORMAT CSV" < /csv_files/main1.csv
 
-clickhouse-client --query="INSERT INTO table_dataset2 FORMAT CSV" < /csv_files/df2_sample.csv
+clickhouse-client --query="INSERT INTO table_dataset2 FORMAT CSV" < /csv_files/main2.csv
 
-clickhouse-client --query="INSERT INTO table_dataset3 FORMAT CSV" < /csv_files/df3_sample.csv
-echo 'done'
+clickhouse-client --query="INSERT INTO table_dataset3 FORMAT CSV" < /csv_files/main3.csv
+echo 'Done populating table_datasets'

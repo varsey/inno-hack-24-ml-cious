@@ -14,6 +14,7 @@ TARGET_COLS = ['uid', 'birthdate', 'phone', 'address', 'full_name', 'source']
 @duration
 def stage1_run(data: tuple):
     df_1_raw, df_2_raw, df_3_raw = data
+    log.info('Building datasets...')
 
     # TO-DO figure out how to get column names from ch
     df_1 = pd.DataFrame(df_1_raw[0])
@@ -24,6 +25,9 @@ def stage1_run(data: tuple):
 
     df_3 = pd.DataFrame(df_3_raw[0])
     df_3.columns = [x[0] for x in df_3_raw[1][-1]]
+    del df_1_raw, df_2_raw, df_3_raw
+
+    log.info('Started preprocessing...')
 
     df_1 = df_1.drop(['sex', 'email'], axis=1)
     df_3 = df_3.drop(['sex', 'email'], axis=1)
