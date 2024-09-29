@@ -8,6 +8,8 @@ log = DicLogger(LOGGING_CONFIG).log
 def get_data_from_ch() -> tuple:
     client = Client(host='localhost')
     log.info(f'{client.execute("SHOW DATABASES")}')
+
+    # TO-DO figure out how to get column names from ch
     df1 = client.execute('SELECT * FROM table_dataset1')
     df1_clms = client.execute('SELECT * FROM table_dataset1', with_column_types=True)
 

@@ -11,6 +11,7 @@ TOTALWORDS_LIMIT = 6
 def stage1_run(data: tuple):
     df_1_raw, df_2_raw, df_3_raw = data
 
+    # TO-DO figure out how to get column names from ch
     df_1 = pd.DataFrame(df_1_raw[0])
     df_1.columns = [x[0] for x in df_1_raw[1][-1]]
 
