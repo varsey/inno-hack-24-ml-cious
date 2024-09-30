@@ -75,8 +75,4 @@ def stage1_run(data: tuple):
 
     selected_df_overall = df_overall.sort_values(by=['full_name', 'phone', 'birthdate'], ascending=True)
 
-    print(
-        selected_df_overall[['full_name', 'phone', 'birthdate']].head(20)
-    )
-
     return selected_df_overall[['uid', 'sign', 'source']]

@@ -1,3 +1,4 @@
+import os
 import uuid
 
 import pandas as pd
@@ -47,7 +48,5 @@ def stage2_run(selected_df_overall: pd.DataFrame):
             for i, (dist, idx) in enumerate(zip(distances[0], indices[0])):
                 if dist < THRESHOLD and dist != 0 and idx != indices[0][0]:
                     result.loc[uuid.uuid4()] = fill_row_by_pair(selected_df_overall, N, indx, idx, indices)
-
-    print(result.sample(5))
 
     return result
